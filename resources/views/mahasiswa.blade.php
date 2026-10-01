@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -8,44 +7,72 @@
     <title>Data Mahasiswa</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 
-<body class="bg-light">
+<body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-dark bg-primary shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
         <div class="container">
-            <span class="navbar-brand mb-0 h1">
-                Data Mahasiswa
-            </span>
+
+            <a class="navbar-brand fw-bold" href="{{ url('/dashboard') }}">
+                Sistem Mahasiswa
+            </a>
+
+            <div class="navbar-nav ms-auto">
+
+                <a class="nav-link" href="{{ url('/dashboard') }}">
+                    Dashboard
+                </a>
+
+                <a class="nav-link active" href="{{ url('/mahasiswa') }}">
+                    Mahasiswa
+                </a>
+
+                @if(auth()->user()->role === 'admin')
+                <a class="nav-link" href="{{ url('/profile') }}">
+                    Profile
+                </a>
+                @endif
+
+            </div>
+
         </div>
     </nav>
 
-    <div class="container mt-5">
+
+    <!-- Container -->
+    <div class="container">
 
         <!-- Judul dan Tombol Tambah -->
         <div class="d-flex justify-content-between align-items-center mb-4">
+
             <div>
                 <h2 class="fw-bold">Daftar Mahasiswa</h2>
+
                 <p class="text-muted mb-0">
                     Berikut adalah data mahasiswa yang tersedia
                 </p>
             </div>
 
-            <a href="/tambah" class="btn btn-success">
+            <a href="{{ url('/tambah') }}" class="btn btn-success">
                 + Tambah Data
             </a>
+
         </div>
+
 
         <!-- Card -->
         <div class="card shadow border-0">
+
             <div class="card-body">
 
                 <div class="table-responsive">
+
                     <table class="table table-hover table-bordered align-middle text-center">
 
                         <thead class="table-primary">
+
                             <tr>
                                 <th>No</th>
                                 <th>NIM</th>
@@ -59,56 +86,106 @@
                                 <th>Email</th>
                                 <th>Aksi</th>
                             </tr>
+
                         </thead>
 
                         <tbody>
+
                             @forelse ($users as $user)
+
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $user->Nim }}</td>
-                                <td>{{ $user->nama }}</td>
-                                <td>{{ $user->tempat_lahir }}</td>
-                                <td>{{ $user->tanggal_lahir }}</td>
-                                <td>{{ $user->jenis_kelamin }}</td>
-                                <td>{{ $user->alamat }}</td>
-                                <td>{{ $user->programstudi }}</td>
-                                <td>{{ $user->nomortelpon }}</td>
-                                <td>{{ $user->email }}</td>
 
                                 <td>
+                                    {{ $loop->iteration }}
+                                </td>
+
+                                <td>
+                                    {{ $user->Nim }}
+                                </td>
+
+                                <td>
+                                    {{ $user->nama }}
+                                </td>
+
+                                <td>
+                                    {{ $user->tempat_lahir }}
+                                </td>
+
+                                <td>
+                                    {{ $user->tanggal_lahir }}
+                                </td>
+
+                                <td>
+                                    {{ $user->jenis_kelamin }}
+                                </td>
+
+                                <td>
+                                    {{ $user->alamat }}
+                                </td>
+
+                                <td>
+                                    {{ $user->programstudi }}
+                                </td>
+
+                                <td>
+                                    {{ $user->nomortelpon }}
+                                </td>
+
+                                <td>
+                                    {{ $user->email }}
+                                </td>
+
+                                <td>
+
                                     <div class="d-flex gap-2 justify-content-center">
 
-                                        <a class="btn btn-warning btn-sm"
-                                            href="/mahasiswa/edit/{{ $user->id }}">
+                                        <!-- Edit -->
+                                        <a
+                                            class="btn btn-warning btn-sm"
+                                            href="{{ url('/mahasiswa/edit/' . $user->id) }}">
                                             Edit
                                         </a>
 
-                                        <a class="btn btn-danger btn-sm"
-                                            href="/mahasiswa/hapus/{{ $user->id }}"
+                                        <!-- Hapus -->
+                                        <a
+                                            class="btn btn-danger btn-sm"
+                                            href="{{ url('/mahasiswa/hapus/' . $user->id) }}"
                                             onclick="return confirm('Yakin ingin menghapus data ini?')">
                                             Hapus
                                         </a>
 
                                     </div>
+
                                 </td>
+
                             </tr>
 
                             @empty
+
                             <tr>
+
                                 <td colspan="11" class="text-center text-muted">
+
                                     Data mahasiswa belum tersedia
+
                                 </td>
+
                             </tr>
+
                             @endforelse
 
                         </tbody>
+
                     </table>
+
                 </div>
 
             </div>
+
         </div>
 
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
